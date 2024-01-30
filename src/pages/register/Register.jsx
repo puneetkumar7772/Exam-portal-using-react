@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Register.module.css";
 import images from "../../images/1.jpeg";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axiosInstance from "../../axios/Axios";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -17,6 +17,8 @@ const Register = () => {
     password: "",
     confirmedPassword: "",
   });
+  const { userId } = useParams();
+  console.log("user id ", userId);
 
   const handleChangeData = (e) => {
     setRegisterData({ ...registerData, [e.target.name]: e.target.value });
@@ -30,13 +32,12 @@ const Register = () => {
       if (e.target.password.value === e.target.confirmedPassword.value) {
         const data = await axiosInstance.post("registerUser", body);
         console.log("((((((((", data.error);
-        console.log("99999999")
+        console.log("99999999");
         toast.success("User registered successfully", {
           position: "top-center",
           autoClose: 5000,
         });
-      }
-       else {
+      } else {
         toast.error("not matched!", {
           position: "top-center",
           autoClose: 5000,
@@ -63,7 +64,7 @@ const Register = () => {
               <form className={styles.loginform} onSubmit={handleSubmitData}>
                 <div className={styles.formgroup}>
                   <input
-                    className={styles.formcontrol}
+                    className={`${styles.formcontrol} ${styles.input_text}`}
                     type="text"
                     id="text"
                     name="fullName"
@@ -74,7 +75,7 @@ const Register = () => {
                 </div>
                 <div className={styles.formgroup}>
                   <input
-                    className={styles.formcontrol}
+                    className={`${styles.formcontrol} ${styles.input_text}`}
                     type="text"
                     id="Username"
                     name="userName"
@@ -85,7 +86,7 @@ const Register = () => {
                 </div>
                 <div className={styles.formgroup}>
                   <input
-                    className={styles.formcontrol}
+                    className={`${styles.formcontrol} ${styles.input_text}`}
                     type="email"
                     id="email"
                     name="email"
@@ -96,7 +97,7 @@ const Register = () => {
                 </div>
                 <div className={styles.formgroup}>
                   <input
-                    className={styles.formcontrol}
+                    className={`${styles.formcontrol} ${styles.input_text}`}
                     type="text"
                     id="cochingName"
                     name="cochingName"
@@ -107,7 +108,7 @@ const Register = () => {
                 </div>
                 <div className={styles.formgroup}>
                   <input
-                    className={styles.formcontrol}
+                    className={`${styles.formcontrol} ${styles.input_text}`}
                     type="password"
                     id="password"
                     name="password"
@@ -118,7 +119,7 @@ const Register = () => {
                 </div>
                 <div className={styles.formgroup}>
                   <input
-                    className={styles.formcontrol}
+                    className={`${styles.formcontrol} ${styles.input_text}`}
                     type="password"
                     id="confirmpassword"
                     name="confirmedPassword"
@@ -127,7 +128,7 @@ const Register = () => {
                     required
                   />
                 </div>
-                <button type="submit">Register</button>
+                <button className={styles.submit} type="submit">Register</button>
                 <div className={styles.signuplink}>
                   <p>
                     If you are alredy registered? <Link to="/">Login</Link>
