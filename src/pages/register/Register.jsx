@@ -4,6 +4,10 @@ import images from "../../images/1.jpeg";
 import { Link } from "react-router-dom";
 import axiosInstance from "../../axios/Axios";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Footer from "../../components/footer/Footer";
+
 const Register = () => {
   const [registerData, setRegisterData] = useState({
     fullName: "",
@@ -23,8 +27,21 @@ const Register = () => {
     const body = registerData;
     try {
       console.log(axiosInstance, "$$$$$$$$$$$$$");
-      const data = await axiosInstance.post("registerUser", body);
-      console.log("((((((((", data);
+      if (e.target.password.value === e.target.confirmedPassword.value) {
+        const data = await axiosInstance.post("registerUser", body);
+        console.log("((((((((", data.error);
+        console.log("99999999")
+        toast.success("User registered successfully", {
+          position: "top-center",
+          autoClose: 5000,
+        });
+      }
+       else {
+        toast.error("not matched!", {
+          position: "top-center",
+          autoClose: 5000,
+        });
+      }
     } catch (error) {
       console.log("######", error);
     }
@@ -121,6 +138,7 @@ const Register = () => {
           </div>
         </div>
       </div>
+      {/* <Footer/> */}
     </div>
   );
 };
