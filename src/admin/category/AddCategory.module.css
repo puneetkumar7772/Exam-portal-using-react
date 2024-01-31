@@ -1,0 +1,63 @@
+.container {
+    max-width: 600px;
+    margin: 30px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 27px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #2E374A;
+  }
+  h1{
+    font-weight:600;
+    padding-top: 10px;
+    text-align: center;
+    font-weight: 500;
+    color: #182237;
+  
+  }
+  form {
+    display: grid;
+    gap: 20px;
+  }
+  
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #fff;
+  }
+  
+  input,
+  textarea {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    color: red;
+  }
+  
+  textarea {
+    resize: vertical;
+  }
+  input:focus,
+  textarea:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  
+  .submit {
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .error-message {
+    color: red;
+    font-size: 12px;
+    text-align: left;
+    margin-bottom: 9px;
+  }
+  

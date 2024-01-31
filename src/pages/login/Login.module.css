@@ -60,7 +60,7 @@
     color: #555;
   }
   
-  input {
+  .input_text {
     width: 95%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -68,7 +68,7 @@
     outline: none;
   }
   
-  button {
+  .login {
     width: 100%;
     padding: 10px;
     background-color: #007bff;
@@ -79,7 +79,7 @@
     font-size: 19px;
   }
   
-  button:hover {
+  .login:hover {
     background-color: #0056b3;
   }
   .logincontainer {
