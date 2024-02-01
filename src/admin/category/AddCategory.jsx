@@ -3,6 +3,7 @@ import styles from "./AddCategory.module.css";
 import axiosInstance from "../../axios/Axios";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import AddQuiz from "../addQuiz/AddQuiz";
 const AddCategory = () => {
   const [category, setcategory] = useState({ category: "", description: "" });
   const [authtoken, setauthtoken] = useState("");
@@ -33,7 +34,7 @@ const AddCategory = () => {
         icon: "success",
         title: "Category added successfully",
         showConfirmButton: false,
-        timer: 1500
+        timer: 1500,
       });
       setcategory({ category: "", description: "" });
       console.log("this is response", categroyData);
@@ -44,9 +45,11 @@ const AddCategory = () => {
 
   return (
     <div>
-      <h1>Add New Categories</h1>
       <Link to="/viewCategory">View</Link>
+      <h1 style={{color:"#fff"}}>Add New Categories</h1>
+
       <div className={styles.container}>
+
         <form onSubmit={handleSubmit}>
           <label>Category:</label>
           <div>
@@ -77,6 +80,7 @@ const AddCategory = () => {
           </button>
         </form>
       </div>
+      <AddQuiz />
     </div>
   );
 };

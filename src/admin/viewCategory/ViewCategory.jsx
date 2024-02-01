@@ -1,16 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import styles from "./ViewCategory.module.css";
 import images from "../../images/quiz.jpg";
 import { MdCategory, MdDelete } from "react-icons/md";
 import { FaBullseye, FaEdit } from "react-icons/fa";
-import { Button, Card, CardActions, CardContent, Typography } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Typography,
+} from "@mui/material";
 import axiosInstance from "../../axios/Axios";
 import Swal from "sweetalert2";
 import Modal from "../../components/modal/Modal";
 import BasicModal from "../../components/modal/Modal";
 import { Link } from "react-router-dom";
+const viewCategory = createContext()
 
 const ViewCategory = () => {
+
   const [categoryName, setcategoryName] = useState([]);
   const [deleteId, setDeleteId] = useState("");
   const [open, setOpen] = useState(false);
@@ -65,7 +73,7 @@ const ViewCategory = () => {
           });
           Swal.fire({
             title: "Deleted!",
-            text: "Your file has been deleted.",
+            text: "Your Category has been deleted.",
             icon: "success",
           });
           setDeleteId(id);
@@ -100,50 +108,68 @@ const ViewCategory = () => {
   console.log("%%%%%%", formData);
 
   const updateCategory = async (id) => {
-    console.log("iddddddddddd", id);
-    const body = {
-      category: formData.category,
-      description: formData.description,
-    };
+    setOpen(false);
     try {
-      const token = JSON.parse(localStorage.getItem("authToken"));
-      const updateCategories = await axiosInstance.put(
-        `updatecategory/${id}`,
-        body,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You want to update this category!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, update it!",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const body = {
+            category: formData.category,
+            description: formData.description,
+          };
+          const token = JSON.parse(localStorage.getItem("authToken"));
+          const categories = await axiosInstance.put(
+            `updatecategory/${id}`,
+            body,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          Swal.fire({
+            title: "Updated!",
+            text: "Your Category has been Updated successfully.",
+            icon: "success",
+          });
+          setDeleteId(id);
         }
-      );
-      setOpen(false);
-      setDeleteId(id);
+      });
     } catch (error) {
       console.log("this is an error message", error);
     }
   };
 
   return (
-    <>
+    <viewCategory.Provider categoryName={categoryName}>
       <div>
         <div className={styles.container}>
           <div className={styles.heading}>
-
             <MdCategory style={{ fontSize: "35px", color: "#fff" }} />
             <h1
-              style={{ color: "#fff", fontWeight: "bold", paddingTop: "0px",marginBlockStart:"0em",marginBlockEnd:"0em" }}
+              style={{
+                color: "#fff",
+                fontWeight: "bold",
+                paddingTop: "0px",
+                marginBlockStart: "0em",
+                marginBlockEnd: "0em",
+              }}
             >
               Categories
             </h1>
-          <Link to="/category">
-          <Button
-              variant="contained"
-              style={{marginBottom:"10px"}}
-            >
-              Add Category
-            </Button></Link>
-
+            <Link to="/category">
+              <Button variant="contained" style={{ marginBottom: "10px" }}>
+                Add Category
+              </Button>
+            </Link>
           </div>
           <div className={styles.content}>
             {categoryName.map((item, i) => (
@@ -198,7 +224,7 @@ const ViewCategory = () => {
           handleUpdatdata={handleUpdatdata}
         />
       )}
-    </>
+    </viewCategory.Provider>
   );
 };
 
